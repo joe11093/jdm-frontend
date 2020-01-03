@@ -1,0 +1,46 @@
+<p>
+	Page for {{term}}
+</p>
+<div class="accordion" id="relationAccordion">
+	<div *ngFor="let rt of resJson.rts">
+		<div class="card">
+			<div class="card-header">
+				<h2 class="mb-0">
+					<span>^</span>
+					<button class="btn btn-link" type="button" data-toggle="collapse" attr.data-target="#rt{{rt.rtid}}" aria-expanded="true" attr.aria-controls="rt{{rt.rtid}}">  
+						{{rt.trgpname}}
+					</button>
+				</h2>
+			</div>
+
+			<div id="rt{{rt.rtid}}" class="collapse" aria-labelledby="headingOne" data-parent="#relationAccordion">
+				<div class="card-body">
+					<p class="font-weight-bold">{{rt.rthelp}}</p>
+					<!-- <p>{{resJson.rt_0 | json}}</p> -->
+					<table class="table table-striped table-dark">
+						<thead>
+						    <tr>
+						      <th scope="col">Relation ID</th>
+						      <th scope="col">Node 1</th>
+						      <th scope="col">Node 2</th>
+						      <th scope="col">Weight</th>
+						    </tr>
+						</thead>
+						<tbody>
+							<tr scope="row" *ngFor="let relation of rels[rt.rtid]">
+								<td>{{relation.rid}}</td>
+								<td>{{relation.node1}}</td>
+								<!-- <td><a attr.href="/term;term={{relation.node2}}">{{relation.node2}}</a></td> -->
+								<td><a [routerLink]="" (click)="searchJDM(relation.node2)">{{relation.node2}}</a> </td>
+								<td>{{relation.w}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+    	&nbsp;
+	</div>
+</div>

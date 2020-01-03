@@ -1,0 +1,13 @@
+<div class="jumbotron">
+  <h3>Search for a term</h3><br/>
+
+  <form (ngSubmit)="onSubmit()" #RegisterForm="ngForm">
+    
+    <div class="form-group">
+    
+      <input class="form-control" id="term" placeholder="search term..." name="term" [(ngModel)] = "term">
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Search</button>
+  </form>
+</div>
