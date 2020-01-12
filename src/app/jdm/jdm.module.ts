@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule }   from '@angular/forms';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 import { JdmRoutingModule } from './jdm-routing.module';
 import { SearchComponent } from './search/search.component';
@@ -11,7 +12,8 @@ import { TermPageComponent } from './term-page/term-page.component';
   imports: [
     CommonModule,
     JdmRoutingModule,
-    FormsModule
+    FormsModule,
+    NgxPaginationModule
   ]
 })
 export class JdmModule { }

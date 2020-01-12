@@ -10,9 +10,10 @@ import {JDMService} from '../jdm.service';
   styleUrls: ['./term-page.component.css']
 })
 export class TermPageComponent implements OnInit {
-
+  p: number[] = []; //used in HTML
   term: string;
-  resJson: any={};
+  //resJson: any={};
+  resJson: Observable<any>;
   rels = {};
   constructor(private activatedRoute: ActivatedRoute, private jdmService: JDMService,  private router: Router) { }
 

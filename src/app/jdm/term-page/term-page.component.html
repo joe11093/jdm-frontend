@@ -2,7 +2,7 @@
 	Page for {{term}}
 </p>
 <div class="accordion" id="relationAccordion">
-	<div *ngFor="let rt of resJson.rts">
+	<div *ngFor="let rt of resJson.rts; let i = index;">
 		<div class="card">
 			<div class="card-header">
 				<h2 class="mb-0">
@@ -28,7 +28,8 @@
 						    </tr>
 						</thead>
 						<tbody>
-							<tr scope="row" *ngFor="let relation of rels[rt.rtid]">
+
+							<tr scope="row" *ngFor="let relation of rels[rt.rtid] | paginate: {itemsPerPage:5, currentPage: p[i], id: rt.rtid}">
 								<td>{{relation.rid}}</td>
 								<td>{{relation.node1}}</td>
 								<!-- <td><a attr.href="/term;term={{relation.node2}}">{{relation.node2}}</a></td> -->
@@ -37,6 +38,8 @@
 							</tr>
 						</tbody>
 					</table>
+					<pagination-controls (pageChange)="p[i] = $event" [id]="rt.rtid"></pagination-controls>
+
 				</div>
 				</div>
 			</div>
