@@ -30,4 +30,14 @@ getTerm(term: string) : Observable<any>{
 	console.log(obs); 
 	return obs;
 }
+
+//getInitTerm(term: string) : Observable<any>{
+	//Request the initial, minimized page of a turn that allows
+	// a quick display
+//}
+
+//getTermPageForRel(term, rel, page) : Observable<any>{
+//	//Request a specific page of a term
+	//the page size shoud be defined
+//}  
 }
