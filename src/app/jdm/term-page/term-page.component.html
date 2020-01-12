@@ -3,7 +3,7 @@
 </p>
 <div class="accordion" id="relationAccordion">
 	<div *ngFor="let rt of resJson['rts']; let i = index;">
-		<div class="card">
+		<div class="card row-pointer">
 			<div class="card-header"  data-toggle="collapse" attr.data-target="#rt{{rt['rtid']}}" aria-expanded="true" attr.aria-controls="rt{{rt['rtid']}}">
 				<h2 class="mb-0">
 					<span>^</span>
@@ -30,7 +30,7 @@
 						</thead>
 						<tbody>
 
-							<tr scope="row" *ngFor="let relation of rels[rt['rtid']] | paginate: {itemsPerPage:5, currentPage: p[i], id: rt['rtid']}">
+							<tr scope="row" *ngFor="let relation of rels[rt['rtid']]['relations'] |paginate: {itemsPerPage:5, currentPage: p[i],  totalItems: rels[rt['rtid']]['count'],id: rt['rtid']}">
 								<td>{{relation.rid}}</td>
 								<td>{{relation.node1}}</td>
 								<!-- <td><a attr.href="/term;term={{relation.node2}}">{{relation.node2}}</a></td> -->
@@ -39,7 +39,14 @@
 							</tr>
 						</tbody>
 					</table>
-					<pagination-controls (pageChange)="p[i] = $event" [id]="rt['rtid']"></pagination-controls>
+					<div>
+						<div class="spinner-border text-info"  [ngClass]="{ 'hidden': !loading }" role="status">
+ 							 <span class="sr-only">Loading...</span>
+						</div>
+						<!-- <pagination-controls (pageChange)="p[i] = $event" [id]="rt['rtid']"></pagination-controls> -->
+						<pagination-controls (pageChange)="getPage($event)" [id]="rt['rtid']"></pagination-controls>
+					</div>
+					
 
 				</div>
 				</div>

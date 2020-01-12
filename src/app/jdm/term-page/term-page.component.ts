@@ -29,11 +29,11 @@ export class TermPageComponent implements OnInit {
         //console.log(this.resJson['rts'][6]);
         for(var i = 0; i < this.resJson['rts'].length; i++){
 
-          this.rels[this.resJson['rts'][i]['rtid']] = this.resJson['rt_'+this.resJson['rts'][i]['rtid']];
+          this.rels[this.resJson['rts'][i]['rtid']] = {"count": this.resJson['rt_'+this.resJson['rts'][i]['rtid']]['count'], "relations":this.resJson['rt_'+this.resJson['rts'][i]['rtid']]['relations']};
           
         }
         //console.log(this.rels);
-
+        console.log("LENGTH: " + this.rels[0].count)
       });
 
     }
@@ -46,4 +46,7 @@ public searchJDM(string){
   this.router.navigate(["/term", {term: string}]);
 }
 
+getPage(page: number) {
+        console.log(page);
+    }
 }
