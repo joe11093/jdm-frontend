@@ -12,7 +12,7 @@ import {JDMService} from '../jdm.service';
 export class TermPageComponent implements OnInit {
 
   term: string;
-  resJson: Array<any>;
+  resJson: any={};
   rels = {};
   constructor(private activatedRoute: ActivatedRoute, private jdmService: JDMService,  private router: Router) { }
 
