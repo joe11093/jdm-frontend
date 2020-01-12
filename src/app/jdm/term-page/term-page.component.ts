@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Router } from '@angular/router';
+import { Observable, of, throwError, Subject } from 'rxjs';
 
 import {JDMService} from '../jdm.service';
 
