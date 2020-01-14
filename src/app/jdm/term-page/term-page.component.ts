@@ -15,6 +15,7 @@ export class TermPageComponent implements OnInit {
   term: string;
   //resJson: any={};
   resJson: Observable<any[]>;
+  loading: boolean;
   rels = {};
   constructor(private activatedRoute: ActivatedRoute, private jdmService: JDMService,  private router: Router) { }
 
