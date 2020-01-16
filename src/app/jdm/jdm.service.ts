@@ -24,8 +24,10 @@ getTest(): Observable<any>{
 }
 
 getTerm(term: string) : Observable<any>{
-	var obs: Observable<any> = this.httpClient.get<any>(this.baseURL + "index.php?term=" + term);
+	var path: string = this.baseURL + "index.php?term=" + term;
+	var obs: Observable<any> = this.httpClient.get<any>(path);
 	//console.log(obs); 
+	console.log(path);
 	return obs;
 }
 

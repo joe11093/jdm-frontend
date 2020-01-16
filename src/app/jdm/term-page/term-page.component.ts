@@ -11,10 +11,10 @@ import {JDMService} from '../jdm.service';
   styleUrls: ['./term-page.component.css']
 })
 export class TermPageComponent implements OnInit {
-  p: number[] = []; //used in HTML
+  p: number[] = []; //page numerbeer for each table
   term: string;
   //resJson: any={};
-  resJson: Observable<any[]>;
+  resJson: any[];
   loading: boolean;
   rels = {};
   
@@ -31,11 +31,12 @@ export class TermPageComponent implements OnInit {
         //console.log(this.resJson['rts'][6]);
         for(var i = 0; i < this.resJson['rts'].length; i++){
 
+
           this.rels[this.resJson['rts'][i]['rtid']] = {"count": this.resJson['rt_'+this.resJson['rts'][i]['rtid']]['count'], "relations":this.resJson['rt_'+this.resJson['rts'][i]['rtid']]['relations']};
           
         }
         //console.log(this.rels);
-        console.log("LENGTH: " + this.rels[0].count)
+        //console.log("LENGTH: " + this.rels[0].count)
       });
 
     }
@@ -48,7 +49,18 @@ public searchJDM(string){
   this.router.navigate(["/term", {term: string}]);
 }
 
-getPage(page: number) {
-        console.log(page);
+getPage(page: number, index: number,  rel: number) {
+        //console.log(page);
+        this.loading = true;
+        //console.log("rel: " + rel);
+        this.jdmService.getRelPageForTerm(this.term, rel, page).subscribe((res)=>
+          {
+            //console.log(this.rels[rel]['relations']);
+            this.rels[rel]['relations'] = res ;
+            //console.log(this.resJson['rt_'+rel]['relations']);
+            this.p[index] = page;
+            this.loading = false;
+          }
+        );
     }
 }
