@@ -14,7 +14,7 @@ import {JDMService} from '../jdm.service';
 })
 export class TestingComponent implements OnInit {
 	
-  resJson: Observable<any[]>;
+  resJson: any[];
   p: number = 1;
   total: number;
   loading: boolean;
