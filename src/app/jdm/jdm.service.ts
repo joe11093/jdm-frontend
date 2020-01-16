@@ -33,7 +33,7 @@ getTerm(term: string) : Observable<any>{
 //https://jdm-server-php.herokuapp.com/paginate.php?term=buche&page=1&per_page=5&criterion=relation&type=3
 
 getRelPageForTerm(term, rel, page) : Observable<any>{
-	var path: String = "" + this.baseURL + "paginate.php?term=" + term + "&page=" + page + "&per_page=" + this.per_page + "&criterion=relation" + "&type=" + rel
+	var path: string = "" + this.baseURL + "paginate.php?term=" + term + "&page=" + page + "&per_page=" + this.per_page + "&criterion=relation" + "&type=" + rel
 	var obs: Observable<any> = this.httpClient.get<any>(path);
 	//console.log(obs); 
 	//console.log(path);
