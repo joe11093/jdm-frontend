@@ -30,7 +30,7 @@ export class TermPageComponent implements OnInit {
         //console.log(this.resJson['rt_0']);
         //console.log(this.resJson['rts'][6]);
         for(var i = 0; i < this.resJson['rts'].length; i++){
-
+          this.p[i] = 1;
 
           this.rels[this.resJson['rts'][i]['rtid']] = {"count": this.resJson['rt_'+this.resJson['rts'][i]['rtid']]['count'], "relations":this.resJson['rt_'+this.resJson['rts'][i]['rtid']]['relations']};
           
