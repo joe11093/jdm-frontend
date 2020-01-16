@@ -17,6 +17,7 @@ export class TermPageComponent implements OnInit {
   resJson: Observable<any[]>;
   loading: boolean;
   rels = {};
+  
   constructor(private activatedRoute: ActivatedRoute, private jdmService: JDMService,  private router: Router) { }
 
   ngOnInit() {

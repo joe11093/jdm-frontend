@@ -4,9 +4,6 @@ import { Observable, of, throwError, Subject } from 'rxjs';
 import { catchError, tap} from 'rxjs/operators';
 import { map } from 'rxjs/operators';
 
-const httpOptions = {
-headers: new HttpHeaders({'Content-Type': 'text/plain'})
-};
 
 @Injectable({
 providedIn: 'root'
@@ -15,29 +12,39 @@ providedIn: 'root'
 export class JDMService {
 subject: Subject<Observable<any>> = new Subject();
 baseURL: String = "https://jdm-server-php.herokuapp.com/";
+per_page: number = 5;
 //baseURL: String = "http://localhost:8011/jdm/";
 
 constructor(private httpClient: HttpClient) { }
 
 getTest(): Observable<any>{
 	var obs: Observable<any> = this.httpClient.get<any>(this.baseURL + "index.php?term=buche");
-	console.log(obs); 
+	//console.log(obs); 
 	return obs;
 }
 
 getTerm(term: string) : Observable<any>{
 	var obs: Observable<any> = this.httpClient.get<any>(this.baseURL + "index.php?term=" + term);
-	console.log(obs); 
+	//console.log(obs); 
 	return obs;
 }
 
-//getInitTerm(term: string) : Observable<any>{
-	//Request the initial, minimized page of a turn that allows
-	// a quick display
-//}
 
-//getTermPageForRel(term, rel, page) : Observable<any>{
-//	//Request a specific page of a term
-	//the page size shoud be defined
-//}  
+//https://jdm-server-php.herokuapp.com/paginate.php?term=buche&page=1&per_page=5&criterion=relation&type=3
+
+getRelPageForTerm(term, rel, page) : Observable<any>{
+	var path: String = "" + this.baseURL + "paginate.php?term=" + term + "&page=" + page + "&per_page=" + this.per_page + "&criterion=relation" + "&type=" + rel
+	var obs: Observable<any> = this.httpClient.get<any>(path);
+	//console.log(obs); 
+	//console.log(path);
+	return obs;
+	}
+
+getDefPageForTerm(term, page) : Observable<any>{
+	var obs: Observable<any> = this.httpClient.get<any>(this.baseURL + "paginate.php?term=" + term + "&per_page=" + this.per_page + "&criterion=definition");
+	//console.log(obs); 
+	
+	return obs;
+	}
+
 }
