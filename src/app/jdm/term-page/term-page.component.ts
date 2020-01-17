@@ -27,6 +27,7 @@ export class TermPageComponent implements OnInit {
       this.term = params.get('term');
       this.jdmService.getTerm(this.term).subscribe((res)=>{
         this.resJson = res;
+        //console.log("RES: " + this.resJson.error);
         //console.log(this.resJson['rt_0']);
         //console.log(this.resJson['rts'][6]);
         for(var i = 0; i < this.resJson['rts'].length; i++){

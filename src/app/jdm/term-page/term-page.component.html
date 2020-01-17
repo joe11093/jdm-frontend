@@ -1,3 +1,6 @@
+<div *ngIf="resJson['rts']; then thenBlock else elseBlock"></div>
+
+ <ng-template #thenBlock>
 <p>
 	Page for {{term}}
 </p>
@@ -57,3 +60,12 @@
     	&nbsp;
 	</div>
 </div>
+</ng-template>
+<ng-template #elseBlock>
+	<div>
+	The term {{term}} doesn't exist on the Jeux de Mots server yet. <br />
+	You can try to search for another term here. <br />
+	If you're having trouble with using our website, check our guide page. <br />
+	</div>
+	<app-search></app-search>
+</ng-template>
