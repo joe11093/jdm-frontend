@@ -3,8 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { SearchComponent } from './search/search.component';
 import { TermPageComponent } from './term-page/term-page.component';
-import  {TestingComponent} from './testing/testing.component';
-
+import {TestingComponent} from './testing/testing.component';
+import {UserGuideComponent} from './user-guide/user-guide.component';
 const routes: Routes = [
 	{
 		path: 'search',
@@ -17,6 +17,10 @@ const routes: Routes = [
 	{
 		path: 'test',
 		component: TestingComponent
+	},
+	{
+		path: 'guide',
+		component: UserGuideComponent
 	}
 
 ];

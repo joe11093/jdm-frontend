@@ -7,9 +7,10 @@ import { JdmRoutingModule } from './jdm-routing.module';
 import { SearchComponent } from './search/search.component';
 import { TermPageComponent } from './term-page/term-page.component';
 import { TestingComponent } from './testing/testing.component';
+import { UserGuideComponent } from './user-guide/user-guide.component';
 
 @NgModule({
-  declarations: [SearchComponent, TermPageComponent, TestingComponent],
+  declarations: [SearchComponent, TermPageComponent, TestingComponent, UserGuideComponent],
   imports: [
     CommonModule,
     JdmRoutingModule,
