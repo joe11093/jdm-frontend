@@ -35,7 +35,7 @@ getTerm(term: string, sort: string) : Observable<any>{
 //https://jdm-server-php.herokuapp.com/paginate.php?term=buche&page=1&per_page=5&criterion=relation&type=3
 
 getRelPageForTerm(term, rel, page, sort: string) : Observable<any>{
-	var path: string = "" + this.baseURL + "paginate.php?term=" + term + "&page=" + page + "&per_page=" + this.per_page + "&criterion=relation" + "&type=" + rel + "&sort=" + sort;
+	var path: string = "" + this.baseURL + "paginate.php?term=" + term + "&page=" + page + "&per_page=" + this.per_page + "&target=relation" + "&type=" + rel + "&sort=" + sort;
 	var obs: Observable<any> = this.httpClient.get<any>(path);
 	//console.log("sort: " + sort); 
 	console.log(path);
@@ -43,7 +43,7 @@ getRelPageForTerm(term, rel, page, sort: string) : Observable<any>{
 	}
 
 getDefPageForTerm(term, page, sort) : Observable<any>{
-	var obs: Observable<any> = this.httpClient.get<any>(this.baseURL + "paginate.php?term=" + term + "&per_page=" + this.per_page + "&criterion=definition");
+	var obs: Observable<any> = this.httpClient.get<any>(this.baseURL + "paginate.php?term=" + term + "&per_page=" + this.per_page + "&target=definition");
 	//console.log(obs); 
 	console.log("sort: " + sort); 
 	return obs;

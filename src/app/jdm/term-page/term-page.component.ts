@@ -13,8 +13,9 @@ import {JDMService} from '../jdm.service';
 export class TermPageComponent implements OnInit {
   p: number[] = []; //page numerbeer for each table
   term: string;
+  public displayTerm: string;
   resJson: any[];
-  public sortOptions: any;
+  public sortOptions: string;
   loading: boolean;
   rels = {};
   
@@ -29,10 +30,12 @@ export class TermPageComponent implements OnInit {
       console.log("sort options: " + this.sortOptions);
       this.jdmService.getTerm(this.term, this.sortOptions).subscribe((res)=>{
         this.resJson = res;
+        console.log(this.resJson);
         for(var i = 0; i < this.resJson['rts'].length; i++){
           this.p[i] = 1;
-
-          this.rels[this.resJson['rts'][i]['rtid']] = {"count": this.resJson['rt_'+this.resJson['rts'][i]['rtid']]['count'], "relations":this.resJson['rt_'+this.resJson['rts'][i]['rtid']]['relations']};
+          console.log(this.resJson['term']['name']);
+          this.displayTerm = this.resJson['term']['name'];
+          this.rels[this.resJson['rts'][i]['id']] = {"count": this.resJson['rt_'+this.resJson['rts'][i]['id']]['count'], "relations":this.resJson['rt_'+this.resJson['rts'][i]['id']]['relations']};
           
         }
       });
@@ -44,7 +47,7 @@ export class TermPageComponent implements OnInit {
 public searchJDM(string){
   string = string.replace(/\s/gm,'+');
   console.log("search jdm: " + string);
-  this.router.navigate(["/term", {term: string}]);
+  this.router.navigate(["/term", {term: string, sortOptions: this.sortOptions}]);
 }
 
 getPage(page: number, index: number,  rel: number) {
