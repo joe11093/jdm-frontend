@@ -1,9 +1,9 @@
 <div *ngIf="resJson['rts']; then thenBlock else elseBlock"></div>
 
  <ng-template #thenBlock>
-<p>
-	Page for {{term}}
-</p>
+<h2>
+	Résultats pour {{term}}
+</h2>
 <div class="accordion" id="relationAccordion">
 	<div *ngFor="let rt of resJson['rts']; let i = index;">
 		<div class="card row-pointer">
@@ -33,7 +33,8 @@
 						</thead>
 						<tbody>
 
-							<tr scope="row" *ngFor="let relation of rels[rt['rtid']]['relations'] |paginate: {itemsPerPage:5, currentPage: p[i],  totalItems: rels[rt['rtid']]['count'],id: rt['rtid']}">
+							<tr scope="row" *ngFor="let relation of rels[rt['rtid']]['relations']  |paginate: {itemsPerPage:5, currentPage: p[i],  totalItems: rels[rt['rtid']]['count'],id: rt['rtid']}" [ngClass]="{'red' : 'true'}">
+
 								<td>{{relation.rid}}</td>
 								<td>{{relation.node1}}</td>
 								<!-- <td><a attr.href="/term;term={{relation.node2}}">{{relation.node2}}</a></td> -->

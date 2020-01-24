@@ -12,16 +12,17 @@ import {JDMService} from '../jdm.service';
 export class SearchComponent implements OnInit {
 	term: string;
 	public resJson: Object[];
-
+  public sortOptions: any;
   constructor(private jdmService: JDMService, private router: Router) {
   }
 
   ngOnInit() {
-  	
+  	this.sortOptions = "weight";
   }
 
   onSubmit(){
   	console.log("term: " + this.term);
-    this.router.navigate(["/term", {term: this.term}]);
+    this.router.navigate(["/term", {term: this.term, sortOptions: this.sortOptions}]);
+    console.log("selected sorting: " + this.sortOptions);
   }
 }
