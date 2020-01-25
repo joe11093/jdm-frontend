@@ -17,12 +17,14 @@ export class TermPageComponent implements OnInit {
   resJson: any[];
   public sortOptions: string;
   loading: boolean;
+  pageLoading: boolean;
   rels = {};
   
   constructor(private activatedRoute: ActivatedRoute, private jdmService: JDMService,  private router: Router) { }
 
   ngOnInit() {
 
+   this.pageLoading = true;
    this.activatedRoute.paramMap.subscribe(
     (params: ParamMap) => {
       this.term = params.get('term');
@@ -38,13 +40,15 @@ export class TermPageComponent implements OnInit {
           this.rels[this.resJson['rts'][i]['id']] = {"count": this.resJson['rt_'+this.resJson['rts'][i]['id']]['count'], "relations":this.resJson['rt_'+this.resJson['rts'][i]['id']]['relations']};
           
         }
+        this.pageLoading = false;
       });
-
+      
     }
     )
  }
 
 public searchJDM(string){
+  this.pageLoading = true;
   string = string.replace(/\s/gm,'+');
   console.log("search jdm: " + string);
   this.router.navigate(["/term", {term: string, sortOptions: this.sortOptions}]);

@@ -1,9 +1,20 @@
-<div *ngIf="resJson['rts']; then thenBlock else elseBlock"></div>
+<div *ngIf="pageLoading==true; then loadBlock else displayBlock"></div>
+<ng-template #loadBlock>
+	<div class="spinner-grow text-primary" [ngClass]="{ 'hidden': !pageLoading }">
+		
+						</div>
+</ng-template>
 
+<ng-template #displayBlock> <!--This block will display once the data is loaded from the server-->
+<div *ngIf="resJson['rts']; then thenBlock else elseBlock"></div>
  <ng-template #thenBlock>
 <h2>
 	Résultats pour {{displayTerm}}
 </h2>
+<div>
+	<p>Cette page montre les résultats trouvés sur le serveur Jeux de Mots.</p>
+	<p>Chaque tableau montre le relations du même type. Les lignes en <span class="red">rouge</span> représentent les relations avec des poids négatives.</p>
+</div>
 <div class="accordion" id="relationAccordion">
 	<div *ngFor="let rt of resJson['rts']; let i = index;">
 		<div class="card row-pointer">
@@ -60,6 +71,7 @@
     	&nbsp;
 	</div>
 </div>
+</ng-template>
 </ng-template>
 <ng-template #elseBlock>
 	<div>
