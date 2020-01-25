@@ -13,6 +13,8 @@ export class SearchComponent implements OnInit {
 	term: string;
 	public resJson: Object[];
   public sortOptions: any;
+  public selectedRelation: string;
+
   constructor(private jdmService: JDMService, private router: Router) {
   }
 
@@ -22,7 +24,8 @@ export class SearchComponent implements OnInit {
 
   onSubmit(){
   	console.log("term: " + this.term);
-    this.router.navigate(["/term", {term: this.term, sortOptions: this.sortOptions}]);
     console.log("selected sorting: " + this.sortOptions);
+    console.log("selected: " + this.selectedRelation);
+    this.router.navigate(["/term", {term: this.term, sortOptions: this.sortOptions}]);
   }
 }

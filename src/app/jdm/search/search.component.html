@@ -3,20 +3,170 @@
 
 	<form (ngSubmit)="onSubmit()" #RegisterForm="ngForm">
 
-		<div class="form-group">
-
-			<input class="form-control" id="term" placeholder="terme à rechercher..." name="term" [(ngModel)] = "term">
+		<div class="row form-group">
+			<select id="searchTypeSelect" name="searchTypeSelect" [(ngModel)]="selectedRelation" class="custom-select col-sm-2">
+				<option  value ="-1" [selected]="true"> terme&nbsp;</option>
+				<option  value ="0"> r_associated - idée associée  &nbsp; </option>
+				<option  value ="3"> r_domain - domaine  &nbsp; </option>
+				<option  value ="4"> r_pos - POS  &nbsp; </option>
+				<option  value ="5"> r_syn - synonyme  &nbsp; </option>
+				<option  value ="6"> r_isa - générique  &nbsp; </option>
+				<option  value ="7"> r_anto - contraire  &nbsp; </option>
+				<option  value ="8"> r_hypo - spécifique  &nbsp; </option>
+				<option  value ="9"> r_has_part - partie  &nbsp; </option>
+				<option  value ="10"> r_holo - tout  &nbsp; </option>
+				<option  value ="11"> r_locution - locution  &nbsp; </option>
+				<option  value ="13"> r_agent - action>agent  &nbsp; </option>
+				<option  value ="14"> r_patient - action>patient  &nbsp; </option>
+				<option  value ="15"> r_lieu - chose>lieu  &nbsp; </option>
+				<option  value ="16"> r_instr - action>instrument  &nbsp; </option>
+				<option  value ="17"> r_carac - caractéristique  &nbsp; </option>
+				<option  value ="18"> r_data - r_data  &nbsp; </option>
+				<option  value ="19"> r_lemma - r_lemma  &nbsp; </option>
+				<option  value ="20"> r_has_magn - magn  &nbsp; </option>
+				<option  value ="21"> r_has_antimagn - antimagn  &nbsp; </option>
+				<option  value ="22"> r_family - famille  &nbsp; </option>
+				<option  value ="23"> r_carac-1 - caractéristique-1  &nbsp; </option>
+				<option  value ="24"> r_agent-1 - agent typique-1  &nbsp; </option>
+				<option  value ="25"> r_instr-1 - instrument>action  &nbsp; </option>
+				<option  value ="26"> r_patient-1 - patient-1  &nbsp; </option>
+				<option  value ="27"> r_domain-1 - domaine-1  &nbsp; </option>
+				<option  value ="28"> r_lieu-1 - lieu>chose  &nbsp; </option>
+				<option  value ="29"> r_chunk_pred - predicat  &nbsp; </option>
+				<option  value ="30"> r_lieu_action - lieu>action  &nbsp; </option>
+				<option  value ="31"> r_action_lieu - action>lieu  &nbsp; </option>
+				<option  value ="32"> r_sentiment - sentiment  &nbsp; </option>
+				<option  value ="33"> r_error - erreur  &nbsp; </option>
+				<option  value ="34"> r_manner - manière  &nbsp; </option>
+				<option  value ="35"> r_meaning/glose - glose/sens/signification  &nbsp; </option>
+				<option  value ="36"> r_infopot - information potentielle  &nbsp; </option>
+				<option  value ="37"> r_telic_role - rôle télique  &nbsp; </option>
+				<option  value ="38"> r_agentif_role - rôle agentif  &nbsp; </option>
+				<option  value ="39"> r_verbe-action - verbe>action  &nbsp; </option>
+				<option  value ="40"> r_action-verbe - action>verbe  &nbsp; </option>
+				<option  value ="41"> r_conseq - conséquence  &nbsp; </option>
+				<option  value ="42"> r_causatif - cause  &nbsp; </option>
+				<option  value ="43"> r_adj-verbe - adj>verbe  &nbsp; </option>
+				<option  value ="44"> r_verbe-adj - verbe>adj  &nbsp; </option>
+				<option  value ="45"> r_chunk_sujet - r_chunk_sujet  &nbsp; </option>
+				<option  value ="46"> r_chunk_objet - r_chunk_objet  &nbsp; </option>
+				<option  value ="47"> r_chunk_loc - r_chunk_loc  &nbsp; </option>
+				<option  value ="48"> r_chunk_instr - r_chunk_instr  &nbsp; </option>
+				<option  value ="49"> r_time - action>temps  &nbsp; </option>
+				<option  value ="50"> r_object>mater - objet>matiere  &nbsp; </option>
+				<option  value ="51"> r_mater>object - matière>objet  &nbsp; </option>
+				<option  value ="52"> r_successeur-time - successeur  &nbsp; </option>
+				<option  value ="53"> r_make - produit  &nbsp; </option>
+				<option  value ="54"> r_product_of - est le produit de  &nbsp; </option>
+				<option  value ="55"> r_against - s'oppose à  &nbsp; </option>
+				<option  value ="56"> r_against-1 - a comme opposition  &nbsp; </option>
+				<option  value ="57"> r_implication - implication  &nbsp; </option>
+				<option  value ="58"> r_quantificateur - quantificateur  &nbsp; </option>
+				<option  value ="59"> r_masc - équivalent masc  &nbsp; </option>
+				<option  value ="60"> r_fem - équivalent fem  &nbsp; </option>
+				<option  value ="61"> r_equiv - équivalent  &nbsp; </option>
+				<option  value ="62"> r_manner-1 - maniere-1  &nbsp; </option>
+				<option  value ="63"> r_agentive_implication - implication agentive  &nbsp; </option>
+				<option  value ="64"> r_has_instance - a pour instance  &nbsp; </option>
+				<option  value ="65"> r_verb_real - verbe>real  &nbsp; </option>
+				<option  value ="67"> r_similar - similaire  &nbsp; </option>
+				<option  value ="68"> r_set>item - ensemble>item  &nbsp; </option>
+				<option  value ="69"> r_item>set - item>ensemble  &nbsp; </option>
+				<option  value ="70"> r_processus>agent - processus>agent  &nbsp; </option>
+				<option  value ="71"> r_variante - variante  &nbsp; </option>
+				<option  value ="72"> r_syn_strict - r_syn_strict  &nbsp; </option>
+				<option  value ="73"> r_is_smaller_than - est plus petit que  &nbsp; </option>
+				<option  value ="74"> r_is_bigger_than - est plus gros que  &nbsp; </option>
+				<option  value ="75"> r_accomp - accompagne  &nbsp; </option>
+				<option  value ="76"> r_processus>patient - processus>patient  &nbsp; </option>
+				<option  value ="77"> r_verb_ppas - r_verb_ppas  &nbsp; </option>
+				<option  value ="78"> r_cohypo - co-hyponyme  &nbsp; </option>
+				<option  value ="79"> r_verb_ppre - r_verb_ppre  &nbsp; </option>
+				<option  value ="80"> r_processus>instr - processus>instrument  &nbsp; </option>
+				<option  value ="99"> r_der_morpho - dérivation morphologique  &nbsp; </option>
+				<option  value ="100"> r_has_auteur - a comme auteur  &nbsp; </option>
+				<option  value ="101"> r_has_personnage - a comme personnages  &nbsp; </option>
+				<option  value ="102"> r_can_eat - se nourrit de  &nbsp; </option>
+				<option  value ="103"> r_has_actors - a comme acteurs  &nbsp; </option>
+				<option  value ="104"> r_deplac_mode - mode de déplacement  &nbsp; </option>
+				<option  value ="105"> r_has_interpret - a comme interprètes  &nbsp; </option>
+				<option  value ="106"> r_color - couleur  &nbsp; </option>
+				<option  value ="107"> r_cible - a comme cible  &nbsp; </option>
+				<option  value ="108"> r_symptomes - a comme symptomes  &nbsp; </option>
+				<option  value ="109"> r_predecesseur-time - prédécesseur  &nbsp; </option>
+				<option  value ="110"> r_diagnostique - diagnostique  &nbsp; </option>
+				<option  value ="111"> r_predecesseur-space - prédécesseur  &nbsp; </option>
+				<option  value ="112"> r_successeur-space - successeur  &nbsp; </option>
+				<option  value ="113"> r_social_tie - relation sociale/famille  &nbsp; </option>
+				<option  value ="114"> r_tributary - r_tributary  &nbsp; </option>
+				<option  value ="115"> r_sentiment-1 - sentiment-1  &nbsp; </option>
+				<option  value ="116"> r_linked-with - linked-with  &nbsp; </option>
+				<option  value ="117"> r_foncteur - r_foncteur  &nbsp; </option>
+				<option  value ="118"> r_comparison - r_comparison  &nbsp; </option>
+				<option  value ="119"> r_but - r_but  &nbsp; </option>
+				<option  value ="120"> r_but-1 - r_but-1  &nbsp; </option>
+				<option  value ="121"> r_own - pers>possession  &nbsp; </option>
+				<option  value ="122"> r_own-1 - possession>pers  &nbsp; </option>
+				<option  value ="123"> r_verb_aux - r_verb_aux  &nbsp; </option>
+				<option  value ="124"> r_predecesseur-logic - prédécesseur logique  &nbsp; </option>
+				<option  value ="125"> r_successeur-logic - successeur logique  &nbsp; </option>
+				<option  value ="126"> r_isa-incompatible - r_isa-incompatible  &nbsp; </option>
+				<option  value ="127"> r_incompatible - r_incompatible  &nbsp; </option>
+				<option  value ="128"> r_node2relnode - r_node2relnode  &nbsp; </option>
+				<option  value ="129"> r_require - nécessite / requiert  &nbsp; </option>
+				<option  value ="130"> r_is_instance_of - est une instance de  &nbsp; </option>
+				<option  value ="131"> r_is_concerned_by - est concerné par  &nbsp; </option>
+				<option  value ="132"> r_symptomes-1 - est un symptome de  &nbsp; </option>
+				<option  value ="133"> r_units - a pour unités  &nbsp; </option>
+				<option  value ="134"> r_promote - favorise  &nbsp; </option>
+				<option  value ="135"> r_circumstances - circumstances  &nbsp; </option>
+				<option  value ="136"> r_has_auteur-1 - est l'auteur de  &nbsp; </option>
+				<option  value ="149"> r_compl_agent - complément d'agent  &nbsp; </option>
+				<option  value ="150"> r_beneficiaire - action>bénéficiaire  &nbsp; </option>
+				<option  value ="151"> r_descend_de - descend de  &nbsp; </option>
+				<option  value ="152"> r_domain_subst - domain_subst  &nbsp; </option>
+				<option  value ="153"> r_prop - propriété  &nbsp; </option>
+				<option  value ="154"> r_activ_voice - voix active  &nbsp; </option>
+				<option  value ="155"> r_make_use_of - r_make_use_of  &nbsp; </option>
+				<option  value ="156"> r_is_used_by - r_is_used_by  &nbsp; </option>
+				<option  value ="157"> r_adj-nomprop - adj>nomprop  &nbsp; </option>
+				<option  value ="158"> r_nomprop-adj - nomprop>adj  &nbsp; </option>
+				<option  value ="159"> r_adj-adv - adj>adv  &nbsp; </option>
+				<option  value ="160"> r_adv-adj - adv>adj  &nbsp; </option>
+				<option  value ="161"> r_homophone - homophone  &nbsp; </option>
+				<option  value ="162"> r_potential_confusion - confusion potentielle  &nbsp; </option>
+				<option  value ="163"> r_concerning - concernant  &nbsp; </option>
+				<option  value ="164"> r_adj>nom - r_adj>nom  &nbsp; </option>
+				<option  value ="165"> r_nom>adj - r_nom>adj  &nbsp; </option>
+				<option  value ="166"> r_opinion_of - r_opinion_of  &nbsp; </option>
+				<option  value ="200"> r_context - r_context  &nbsp; </option>
+				<option  value ="333"> r_translation - r_translation  &nbsp; </option>
+				<option  value ="444"> r_link - r_link  &nbsp; </option>
+				<option  value ="555"> r_cooccurrence - r_cooccurrence  &nbsp; </option>
+				<option  value ="666"> r_aki - r_aki  &nbsp; </option>
+				<option  value ="777"> r_wiki - r_wiki  &nbsp; </option>
+				<option  value ="997"> r_annotation_exception - r_annotation_exception  &nbsp; </option>
+				<option  value ="998"> r_annotation - r_annotation  &nbsp; </option>
+				<option  value ="999"> r_inhib - r_inhib  &nbsp; </option>
+				<option  value ="1000"> r_prev - r_prev  &nbsp; </option>
+				<option  value ="1001"> r_succ - r_succ  &nbsp; </option>
+				<option  value ="1002"> r_termgroup - r_termgroup  &nbsp; </option>
+				<option  value ="2000"> r_raff_sem-1 - r_raff_sem-1  &nbsp; </option>
+				<option  value ="2001"> r_learning_model - r_learning_model  &nbsp; </option>
+			</select>
+			<input class="form-control col-sm-8" id="term" placeholder="terme à rechercher..." name="term" [(ngModel)] = "term">
+			
 		</div>
 		<div class="form-group">
-		<div class="form-check form-check-inline">
-			<input class="form-check-input" type="radio" name="sortOptions" [(ngModel)]="sortOptions" id="weight" value="weight" checked="true">
-			<label class="form-check-label" for="weight">poids</label>
-		</div>
-		<div class="form-check form-check-inline">
-			<input class="form-check-input" type="radio" name="sortOptions" [(ngModel)]="sortOptions"  id="alpha" value="alpha" >
-			<label class="form-check-label" for="alphabetic">alphabetique</label>
-		</div>
-	</div>   
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="radio" name="sortOptions" [(ngModel)]="sortOptions" id="weight" value="weight" checked="true">
+				<label class="form-check-label" for="weight">poids</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="radio" name="sortOptions" [(ngModel)]="sortOptions"  id="alpha" value="alpha" >
+				<label class="form-check-label" for="alphabetic">alphabetique</label>
+			</div>
+		</div>   
 		<div>
 			<button type="submit" class="btn btn-primary">Recherche</button>
 		</div>	
