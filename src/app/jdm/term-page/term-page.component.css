@@ -10,3 +10,6 @@
 	background-color: red;
 }
 
+.bigger-spinner{
+	width: 10rem; height: 10rem;
+}
