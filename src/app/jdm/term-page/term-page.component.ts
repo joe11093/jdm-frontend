@@ -73,7 +73,7 @@ export class TermPageComponent implements OnInit {
 
 public searchJDM(string){
   this.pageLoading = true;
-  this.searchFor = -1;
+  this.searchFor = "-1";
   string = string.replace(/\s/gm,'+');
   //console.log("search jdm: " + string);
   this.router.navigate(["/term", {term: string, sortOptions: this.sortOptions, searchFor: -1}]);
