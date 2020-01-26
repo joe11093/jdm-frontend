@@ -7,6 +7,11 @@ import {TestingComponent} from './testing/testing.component';
 import {UserGuideComponent} from './user-guide/user-guide.component';
 const routes: Routes = [
 	{
+		path: '',
+		component: SearchComponent
+	},
+
+	{
 		path: 'search',
 		component: SearchComponent
 	},
