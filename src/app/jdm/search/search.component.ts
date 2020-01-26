@@ -16,6 +16,7 @@ export class SearchComponent implements OnInit {
   public selectedRelation: string;
 
   constructor(private jdmService: JDMService, private router: Router) {
+    this.selectedRelation = "-1";
   }
 
   ngOnInit() {
@@ -26,6 +27,6 @@ export class SearchComponent implements OnInit {
   	console.log("term: " + this.term);
     console.log("selected sorting: " + this.sortOptions);
     console.log("selected: " + this.selectedRelation);
-    this.router.navigate(["/term", {term: this.term, sortOptions: this.sortOptions}]);
+    this.router.navigate(["/term", {term: this.term, sortOptions: this.sortOptions, searchFor: this.selectedRelation}]);
   }
 }

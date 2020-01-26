@@ -2,82 +2,96 @@
 <ng-template #loadBlock>
 	<div class="spinner-grow text-primary bigger-spinner" [ngClass]="{ 'hidden': !pageLoading }">
 		
-						</div>
+	</div>
 </ng-template>
 
 <ng-template #displayBlock> <!--This block will display once the data is loaded from the server-->
-<div *ngIf="resJson['rts']; then thenBlock else elseBlock"></div>
- <ng-template #thenBlock>
-<h2>
-	Résultats pour {{displayTerm}}
-</h2>
-<div>
-	<p>Cette page montre les résultats trouvés sur le serveur Jeux de Mots.</p>
-	<p>Chaque tableau montre le relations du même type. Les lignes en <span class="red">rouge</span> représentent les relations avec des poids négatives.</p>
-</div>
-<div class="accordion" id="relationAccordion">
-	<div *ngFor="let rt of resJson['rts']; let i = index;">
-		<div class="card row-pointer">
-			<div class="card-header"  data-toggle="collapse" attr.data-target="#rt{{rt['id']}}" aria-expanded="true" attr.aria-controls="rt{{rt['id']}}">
-				<h2 class="mb-0">
-					<span>^</span>
-					<button class="btn btn-link" type="button">  
-						{{rt.description}}
-					</button>
-				</h2>
-				<p class="font-weight-bold">{{rt.rthelp}}</p>
-			</div>
+	<div *ngIf="resJson['rts']; then thenBlock else elseBlock"></div>
+	<ng-template #thenBlock>
+		<h2>
+			Résultats pour {{displayTerm}}
+		</h2>
+		<div>
+			<p>Cette page montre les résultats trouvés sur le serveur Jeux de Mots.</p>
+			<p>Chaque tableau montre le relations du même type. Les lignes en <span class="red">rouge</span> représentent les relations avec des poids négatives.</p>
+		</div>
+		<div class="jumbotron">
+			<h4>Definitions</h4>
+			<div>
+				
+					<p *ngFor="let def of resJson['defs']['definitions'] |paginate: {itemsPerPage:5, currentPage: defsPage,  totalItems: resJson['defs'].count, id: defs}"><span class="red">{{def.number}}. </span><span>{{def.content}}</span></p>
+				
+				<div>
+					<div class="spinner-grow text-primary" [ngClass]="{ 'hidden': !loading }">
 
-			<div id="rt{{rt['id']}}" class="collapse" aria-labelledby="headingOne" data-parent="#relationAccordion">
-				<div class="card-body">
-					
-					<!-- <p>{{resJson.rt_0 | json}}</p> -->
-					<div class="table-responsive">
-					<table class="table table-striped table-dark">
-						<thead>
-						    <tr>
-						      <th scope="col">Relation ID</th>
-						      <th scope="col">Node 1</th>
-						      <th scope="col">Node 2</th>
-						      <th scope="col">Weight</th>
-						    </tr>
-						</thead>
-						<tbody>
-							<tr scope="row" *ngFor="let relation of rels[rt['id']]['relations']  |paginate: {itemsPerPage:5, currentPage: p[i],  totalItems: rels[rt['id']]['count'],id: rt['id']}" [ngClass]="relation.weightType=='n' ? 'red' : ''">
-
-								<td>{{relation.id}}</td>
-								<td>{{relation.source}}</td>
-								<!-- <td><a attr.href="/term;term={{relation.node2}}">{{relation.node2}}</a></td> -->
-								<td><a [routerLink]="" (click)="searchJDM(relation.destination)">{{relation.destination}}</a> </td>
-								<td>{{relation.weight}}</td>
-							</tr>
-						</tbody>
-					</table>
-					<div>
-						<div class="spinner-grow text-primary" [ngClass]="{ 'hidden': !loading }">
-		
-						</div>
-						<!-- <pagination-controls (pageChange)="p[i] = $event" [id]="rt['rtid']"></pagination-controls> -->
-						<pagination-controls (pageChange)="getPage($event, i, rt['id'])" [id]="rt['id']"></pagination-controls>
 					</div>
-					
-
-				</div>
+					<!-- <pagination-controls (pageChange)="p[i] = $event" [id]="rt['rtid']"></pagination-controls> -->
+					<pagination-controls (pageChange)="getPageForDefs($event)" [id]="defs"></pagination-controls>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="form-group">
-    	&nbsp;
-	</div>
-</div>
-</ng-template>
+		<div class="accordion" id="relationAccordion">
+			<div *ngFor="let rt of resJson['rts']; let i = index;">
+				<div class="card row-pointer">
+					<div class="card-header"  data-toggle="collapse" attr.data-target="#rt{{rt['id']}}" aria-expanded="true" attr.aria-controls="rt{{rt['id']}}">
+						<h2 class="mb-0">
+							<span>^</span>
+							<button class="btn btn-link" type="button">  
+								{{rt.description}}
+							</button>
+						</h2>
+						<p class="font-weight-bold">{{rt.rthelp}}</p>
+					</div>
+
+					<div id="rt{{rt['id']}}" class="collapse" aria-labelledby="headingOne" data-parent="#relationAccordion">
+						<div class="card-body">
+
+							<!-- <p>{{resJson.rt_0 | json}}</p> -->
+							<div class="table-responsive">
+								<table class="table table-striped table-dark">
+									<thead>
+										<tr>
+											<th scope="col">Node 1</th>
+											<th scope="col">Node 2</th>
+											<th scope="col">Weight</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr scope="row" *ngFor="let relation of rels[rt['id']]['relations']  |paginate: {itemsPerPage:5, currentPage: p[i],  totalItems: rels[rt['id']]['count'],id: rt['id']}" [ngClass]="relation.weightType=='n' ? 'red' : ''">
+
+
+											<td>{{relation.source}}</td>
+											<!-- <td><a attr.href="/term;term={{relation.node2}}">{{relation.node2}}</a></td> -->
+											<td><a [routerLink]="" (click)="searchJDM(relation.destination)">{{relation.destination}}</a> </td>
+											<td>{{relation.weight}}</td>
+										</tr>
+									</tbody>
+								</table>
+								<div>
+									<div class="spinner-grow text-primary" [ngClass]="{ 'hidden': !loading }">
+
+									</div>
+									<!-- <pagination-controls (pageChange)="p[i] = $event" [id]="rt['rtid']"></pagination-controls> -->
+									<pagination-controls (pageChange)="getPageForRel($event, i, rt['id'])" [id]="rt['id']"></pagination-controls>
+								</div>
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				&nbsp;
+			</div>
+		</div>
+	</ng-template>
 </ng-template>
 <ng-template #elseBlock>
 	<div>
-	The term {{term}} doesn't exist on the Jeux de Mots server yet. <br />
-	You can try to search for another term here. <br />
-	If you're having trouble with using our website, check our guide page. <br />
+		The term {{term}} doesn't exist on the Jeux de Mots server yet. <br />
+		You can try to search for another term here. <br />
+		If you're having trouble with using our website, check our guide page. <br />
 	</div>
 	<app-search></app-search>
 </ng-template>

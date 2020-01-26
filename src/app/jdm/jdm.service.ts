@@ -31,21 +31,30 @@ getTerm(term: string, sort: string) : Observable<any>{
 	return obs;
 }
 
-
+//https://jdm-server-php.herokuapp.com/index.php?term=buche&type=0&sort=alpha
+getTermWithSelectedRT(term: string, sort: string, rt: string){
+	var path: string = this.baseURL + "index.php?term=" + term + "&type=" + rt+ "&sort=" + sort + "&type=" + rt;
+	console.log(path);
+	var obs: Observable<any> = this.httpClient.get<any>(path);
+	return obs;
+}
 //https://jdm-server-php.herokuapp.com/paginate.php?term=buche&page=1&per_page=5&criterion=relation&type=3
 
 getRelPageForTerm(term, rel, page, sort: string) : Observable<any>{
 	var path: string = "" + this.baseURL + "paginate.php?term=" + term + "&page=" + page + "&per_page=" + this.per_page + "&target=relation" + "&type=" + rel + "&sort=" + sort;
 	var obs: Observable<any> = this.httpClient.get<any>(path);
 	//console.log("sort: " + sort); 
-	console.log(path);
+	//console.log(path);
 	return obs;
 	}
 
-getDefPageForTerm(term, page, sort) : Observable<any>{
-	var obs: Observable<any> = this.httpClient.get<any>(this.baseURL + "paginate.php?term=" + term + "&per_page=" + this.per_page + "&target=definition");
+//https://jdm-server-php.herokuapp.com/paginate.php?term=buche&page=2&per_page=5&target=definition
+getDefPageForTerm(term, page) : Observable<any>{
+	var path = this.baseURL + "paginate.php?term=" + term + "&page=" + page + "&per_page=" + this.per_page + "&target=definition";
+	console.log("def page path: " + path);
+	var obs: Observable<any> = this.httpClient.get<any>(path);
 	//console.log(obs); 
-	console.log("sort: " + sort); 
+	//console.log("sort: " + sort); 
 	return obs;
 	}
 

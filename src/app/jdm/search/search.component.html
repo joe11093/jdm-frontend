@@ -4,8 +4,8 @@
 	<form (ngSubmit)="onSubmit()" #RegisterForm="ngForm">
 
 		<div class="row form-group">
-			<select id="searchTypeSelect" name="searchTypeSelect" [(ngModel)]="selectedRelation" class="custom-select col-sm-2">
-				<option  value ="-1" [selected]="true"> terme&nbsp;</option>
+			<select id="searchTypeSelect" name="searchTypeSelect" [(ngModel)]="selectedRelation" class="custom-select col-sm-2" required>
+				<option  value ="-1"> terme&nbsp;</option>
 				<option  value ="0"> r_associated - idée associée  &nbsp; </option>
 				<option  value ="3"> r_domain - domaine  &nbsp; </option>
 				<option  value ="4"> r_pos - POS  &nbsp; </option>
