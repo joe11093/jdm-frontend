@@ -21,7 +21,7 @@ export class TermPageComponent implements OnInit {
   pageLoading: boolean;
   rels = {};
   searchFor: string; //term(-1) or relationship number(0 and plus)
-  
+  defs = "defs";
   constructor(private activatedRoute: ActivatedRoute, private jdmService: JDMService,  private router: Router) { }
 
   ngOnInit() {
