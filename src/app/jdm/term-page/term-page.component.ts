@@ -29,19 +29,20 @@ export class TermPageComponent implements OnInit {
    this.activatedRoute.paramMap.subscribe(
     (params: ParamMap) => {
       this.searchFor = params.get("searchFor");
-       console.log("searchFor: " + this.searchFor);
+       //console.log("searchFor: " + this.searchFor);
       this.term = params.get('term');
       this.sortOptions = params.get('sortOptions');
-      console.log("sort options: " + this.sortOptions);
+      //console.log("sort options: " + this.sortOptions);
 
       if(this.searchFor == "-1"){
+      console.log("if");
       this.jdmService.getTerm(this.term, this.sortOptions).subscribe((res)=>{
         this.resJson = res;
-        console.log(this.resJson);
+        //console.log(this.resJson);
         this.defsPage = 1;
         for(var i = 0; i < this.resJson['rts'].length; i++){
           this.p[i] = 1;
-          console.log(this.resJson['term']['name']);
+          //console.log(this.resJson['term']['name']);
           this.displayTerm = this.resJson['term']['name'];
           this.rels[this.resJson['rts'][i]['id']] = {"count": this.resJson['rt_'+this.resJson['rts'][i]['id']]['count'], "relations":this.resJson['rt_'+this.resJson['rts'][i]['id']]['relations']};
           
@@ -51,13 +52,14 @@ export class TermPageComponent implements OnInit {
       });
       }
       else{
+      console.log("else");
         this.jdmService.getTermWithSelectedRT(this.term, this.sortOptions, this.searchFor).subscribe((res)=>{
         this.resJson = res;
-        console.log(this.resJson);
+        //console.log(this.resJson);
         this.defsPage = 1;
         for(var i = 0; i < this.resJson['rts'].length; i++){
           this.p[i] = 1;
-          console.log(this.resJson['term']['name']);
+          //console.log(this.resJson['term']['name']);
           this.displayTerm = this.resJson['term']['name'];
           this.rels[this.resJson['rts'][i]['id']] = {"count": this.resJson['rt_'+this.resJson['rts'][i]['id']]['count'], "relations":this.resJson['rt_'+this.resJson['rts'][i]['id']]['relations']};
           
@@ -71,9 +73,10 @@ export class TermPageComponent implements OnInit {
 
 public searchJDM(string){
   this.pageLoading = true;
+  this.searchFor = -1;
   string = string.replace(/\s/gm,'+');
-  console.log("search jdm: " + string);
-  this.router.navigate(["/term", {term: string, sortOptions: this.sortOptions}]);
+  //console.log("search jdm: " + string);
+  this.router.navigate(["/term", {term: string, sortOptions: this.sortOptions, searchFor: -1}]);
 }
 
 getPageForRel(page: number, index: number,  rel: number) {
@@ -91,7 +94,7 @@ getPageForDefs(page: number) {
         this.loading = true;
         this.jdmService.getDefPageForTerm(this.term, page).subscribe((res)=>
           {
-          console.log(res);
+            //console.log(res);
             this.resJson['defs']['definitions'] = res ;
             this.defsPage = page;
             this.loading = false;
