@@ -49,7 +49,7 @@ export class TermPageComponent implements OnInit {
           this.displayTerm = this.resJson['term']['name'];
           //console.log(this.displayTerm);
           //console.log(this.resJson['rts']['types'][0]['id']);
-          this.rels[this.resJson['rts']['types'][i]['id']] = {"count": this.resJson['rt_'+this.resJson['rts']['types'][i]['id']]['count'], "relations":this.resJson['rt_'+this.resJson['rts']['types'][i]['id']][this.orientation]['relations']};
+          this.rels[this.resJson['rts']['types'][i]['id']] = {"count": this.resJson['rt_'+this.resJson['rts']['types'][i]['id']][this.orientation]['count'], "relations":this.resJson['rt_'+this.resJson['rts']['types'][i]['id']][this.orientation]['relations']};
           
         }
         //console.log(this.resJson);
