@@ -18,13 +18,13 @@
 			<p>Cette page montre les résultats trouvés sur le serveur Jeux de Mots.</p>
 			<p>Chaque tableau montre les relations du même type. Quand les relations sont triées par poids, les poids sont considerées en valeur absolue. Les lignes colorées représentent les relations avec des poids négatives.</p>
 		</div>
-		<div *ngIf="resJson.defs.count==0; then noDefBlock else defBlock"></div>
+		<div *ngIf="resJson['defs'].count==0; then noDefBlock else defBlock"></div>
 		<ng-template #defBlock>
 			<div class="jumbotron">
 				<h4>Definitions</h4>
 				<br />
 				<div>
-					<p *ngFor="let def of resJson.defs.definitions |paginate: {itemsPerPage:5, currentPage: defsPage,  totalItems: resJson.defs.count, id: defs}"> <span class="defNumber">{{def.number}}. </span><span>{{def.content}}</span></p>
+					<p *ngFor="let def of resJson['defs'].definitions |paginate: {itemsPerPage:5, currentPage: defsPage,  totalItems: resJson.defs.count, id: defs}"> <span class="defNumber">{{def.number}}. </span><span>{{def.content}}</span></p>
 
 					<div>
 						<div class="spinner-grow text-primary" [ngClass]="{ 'hidden': !loading }">
