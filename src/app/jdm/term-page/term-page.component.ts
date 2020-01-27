@@ -21,7 +21,7 @@ export class TermPageComponent implements OnInit {
   loading: boolean;
   pageLoading: boolean;
   rels = {};
-  searchFor: string; //term(-1) or relationship number(0 and plus)
+  searchFor: string;
   defs = "defs";
   constructor(private activatedRoute: ActivatedRoute, private jdmService: JDMService,  private router: Router) { }
 
@@ -29,14 +29,15 @@ export class TermPageComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(
       (params: ParamMap) => {
         this.searchFor = params.get("searchFor");
-       
+       console.log("searchFor: " + this.searchFor);
       this.term = params.get('term');
       this.sortOptions = params.get('sortOptions');
       this.orientation = params.get('orientation');
       console.log("sortOptions: " + this.sortOptions);
       console.log("orientation: " + this.orientation);
-      this.jdmService.getTerm(this.term, this.sortOptions, this.orientation).subscribe((res)=>{
-        console.log(res);
+      if(this.searchFor == -1){ //if searching for whole term
+        this.jdmService.getTerm(this.term, this.sortOptions, this.orientation).subscribe((res)=>{
+        //console.log(res);
         this.resJson = res;
         //console.log(this.resJson.defs.definitions);
         if(this.resJson['error'] != null){
@@ -53,12 +54,30 @@ export class TermPageComponent implements OnInit {
           
         }
         //console.log(this.resJson);
-        console.log(this.rels[0]);
+        //console.log(this.rels[0]);
         }
         
 
         this.pageLoading = false;
       });
+      }
+      else{ //if searching for a particular relation
+         this.jdmService.getTermWithSelectedRT(this.term, this.sortOptions, this.searchFor).subscribe((res)=>{
+            //console.log(res);
+            this.resJson = res;
+            if(this.resJson['error'] != null){
+                console.log("ERROR");
+            }else{
+              this.defsPage = 1;
+              for(var i = 0; i < this.resJson['rts']['types'].length; i++){
+                this.p[i] = 1;
+                this.displayTerm = this.resJson['term']['name'];
+                this.rels[this.resJson['rts']['types'][i]['id']] = {"count": this.resJson['rt_'+this.resJson['rts']['types'][i]['id']][this.orientation]['count'], "relations":this.resJson['rt_'+this.resJson['rts']['types'][i]['id']][this.orientation]['relations']};
+              }
+            }
+         });
+      }
+      
       }
       )
 
@@ -76,7 +95,7 @@ getPageForRel(page: number, index: number,  rel: number) {
         this.loading = true;
         this.jdmService.getRelPageForTerm(this.term, rel, page, this.sortOptions, this.orientation).subscribe((res)=>
           {
-            console.log(res);
+            //console.log(res);
             this.rels[rel]['relations'] = res[this.orientation]['relations'] ;
             this.p[index] = page;
             this.loading = false;
