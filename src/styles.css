@@ -1,1 +1,72 @@
 /* You can add global styles to this file, and also import other style files */
+.navbar{
+	background-color: #7977c9!important;
+}
+
+h2{
+	color: #660033!important;
+}
+
+h4{
+	color: #660033!important;
+}
+h3{
+	color: #660033;
+}
+
+body{
+	background-color: #e3c1d2!important;
+}
+
+.jumbotron{
+	background-color: #c3c2ed!important;
+}
+
+.row-pointer {
+    cursor: pointer;
+}
+
+.hidden{
+	display: none !important;
+}
+
+.negativeWeight{
+	background-color: #b1b0e8;
+}
+
+.negativeWeightText{
+	color: #b1b0e8;
+}
+.bigger-spinner{
+	width: 10rem; height: 10rem;
+}
+
+.btn-color{
+	background-color: #3D3DF4!important;
+}
+
+.defNumber{
+	color: #4f4ce0;
+}
+
+img.downsize {
+    width:140px; /* you can use % */
+    height: auto;
+}
+
+.ngx-pagination {
+  padding-left: 0px !important;
+}
+
+.ngx-pagination .current,
+.btn-info {
+  background: #17a2b8 !important;
+  border: transparent !important;
+  border-radius: 20px !important;
+}
+
+.ngx-pagination .current:hover {
+  background: #17a2b8 !important;
+  border-radius: 20px !important; 
+  border: transparent !important;
+}

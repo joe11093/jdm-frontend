@@ -33,20 +33,23 @@ export class TermPageComponent implements OnInit {
       this.term = params.get('term');
       this.sortOptions = params.get('sortOptions');
       //console.log("sort options: " + this.sortOptions);
-
       if(this.searchFor == "-1"){
       console.log("if");
       this.jdmService.getTerm(this.term, this.sortOptions).subscribe((res)=>{
         this.resJson = res;
-        //console.log(this.resJson);
-        this.defsPage = 1;
+        console.log(this.resJson);
+        if(this.resJson['error'] != null){
+          console.log("ERROR");
+        }else{
+          this.defsPage = 1;
         for(var i = 0; i < this.resJson['rts'].length; i++){
           this.p[i] = 1;
           //console.log(this.resJson['term']['name']);
           this.displayTerm = this.resJson['term']['name'];
           this.rels[this.resJson['rts'][i]['id']] = {"count": this.resJson['rt_'+this.resJson['rts'][i]['id']]['count'], "relations":this.resJson['rt_'+this.resJson['rts'][i]['id']]['relations']};
-          
         }
+        }
+        
 
         this.pageLoading = false;
       });
@@ -55,7 +58,7 @@ export class TermPageComponent implements OnInit {
       console.log("else");
         this.jdmService.getTermWithSelectedRT(this.term, this.sortOptions, this.searchFor).subscribe((res)=>{
         this.resJson = res;
-        //console.log(this.resJson);
+        console.log(this.resJson);
         this.defsPage = 1;
         for(var i = 0; i < this.resJson['rts'].length; i++){
           this.p[i] = 1;
