@@ -7,7 +7,7 @@
 </ng-template>
 
 <ng-template #displayBlock>
-	<div *ngIf="resJson['defs']; then thenBlock else elseBlock"></div>
+	<div *ngIf="resJson['error']; then elseBlock else thenBlock"></div>
 
 	<ng-template #thenBlock>
 		<br />
@@ -46,7 +46,77 @@
 			</div>
 		</ng-template>
 	</ng-template>
-	<ng-template #elseBlock>
+
+	
+	<div *ngIf="resJson['related_terms']; then relatedBlock else exactSearch"></div>
+	<ng-template #exactSearch>
+		<div class="accordion" id="relationAccordion">
+			<h4>Relations</h4>
+			<div *ngFor="let rt of resJson['rts']['types']; let i = index;">
+				<div class="card">
+					<div class="card-header"  data-toggle="collapse" attr.data-target="#rt{{rt['id']}}" aria-expanded="true" attr.aria-controls="rt{{rt['id']}}">
+						<h2 class="mb-0">
+							<span>^</span>
+							<button class="btn btn-link" type="button">  
+								{{rt.description}}
+							</button>
+
+						</h2>
+						<p class="font-weight-bold">{{rt.help}}</p>
+					</div>
+
+					<div id="rt{{rt['id']}}" class="collapse" aria-labelledby="headingOne" data-parent="#relationAccordion">
+						<div class="card-body">
+
+							<!-- <p>{{resJson.rt_0 | json}}</p> -->
+							<div class="table-responsive">
+								<table class="table table-striped">
+									<thead class="thead-dark">
+										<tr>
+											<th scope="col">Node 1</th>
+											<th scope="col">Node 2</th>
+											<!-- <th scope="col">Weight</th> -->
+										</tr>
+									</thead>
+									<tbody>
+										<tr scope="row" *ngFor="let relation of rels[rt['id']]['relations']  |paginate: {itemsPerPage:5, currentPage: p[i],  totalItems: rels[rt['id']]['count'],id: rt['id']}" [ngClass]="relation.weightType=='n' ? 'negativeWeight' : ''">
+
+
+											<td><a class="table-node" [routerLink]="" (click)="searchJDM(relation.source)">{{relation.source}}</a></td>
+											<!-- <td><a attr.href="/term;term={{relation.node2}}">{{relation.node2}}</a></td> -->
+											<td><a class="table-node" [routerLink]="" (click)="searchJDM(relation.destination)">{{relation.destination}}</a> </td>
+											<!-- <td>{{relation.weight}}</td> -->
+										</tr>
+									</tbody>
+								</table>
+								<div>
+									<div class="spinner-grow text-primary" [ngClass]="{ 'hidden': !loading }">
+
+									</div>
+									<!-- <pagination-controls (pageChange)="p[i] = $event" [id]="rt['rtid']"></pagination-controls> -->
+									<pagination-controls (pageChange)="getPageForRel($event, i, rt['id'])" [id]="rt['id']"></pagination-controls>
+								</div>
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				&nbsp;
+			</div>
+		</div>
+	</ng-template>
+	<ng-template #relatedBlock>
+		<h2>Related terms</h2>
+		{{rels.count}}
+		<!-- <ul>
+			<li *ngFor="let term of rels['terms']">{{term.term}}</li>
+		</ul> -->
+
+	</ng-template>
+		<ng-template #elseBlock>
 
 		<app-search></app-search>
 		<div class="d-flex justify-content-center align-items-center">
@@ -55,62 +125,4 @@
 			If you're having trouble with using our website, check our guide page. <br />
 		</div>
 	</ng-template>
-	<h1>{{rels[0].exiting.count}}</h1>
-	<h4>    Relations</h4>
-	<div class="accordion" id="relationAccordion">
-		<div *ngFor="let rt of resJson['rts']['types']; let i = index;">
-			<div class="card">
-				<div class="card-header"  data-toggle="collapse" attr.data-target="#rt{{rt['id']}}" aria-expanded="true" attr.aria-controls="rt{{rt['id']}}">
-					<h2 class="mb-0">
-						<span>^</span>
-						<button class="btn btn-link" type="button">  
-							{{rt.description}}
-						</button>
-
-					</h2>
-					<p class="font-weight-bold">{{rt.help}}</p>
-				</div>
-
-				<div id="rt{{rt['id']}}" class="collapse" aria-labelledby="headingOne" data-parent="#relationAccordion">
-					<div class="card-body">
-
-						<!-- <p>{{resJson.rt_0 | json}}</p> -->
-						<div class="table-responsive">
-							<table class="table table-striped">
-								<thead class="thead-dark">
-									<tr>
-										<th scope="col">Node 1</th>
-										<th scope="col">Node 2</th>
-										<!-- <th scope="col">Weight</th> -->
-									</tr>
-								</thead>
-								<tbody>
-									<tr scope="row" *ngFor="let relation of rels[rt['id']]['relations']  |paginate: {itemsPerPage:5, currentPage: p[i],  totalItems: rels[rt['id']]['count'],id: rt['id']}" [ngClass]="relation.weightType=='n' ? 'negativeWeight' : ''">
-
-
-										<td><a class="table-node" [routerLink]="" (click)="searchJDM(relation.source)">{{relation.source}}</a></td>
-										<!-- <td><a attr.href="/term;term={{relation.node2}}">{{relation.node2}}</a></td> -->
-										<td><a class="table-node" [routerLink]="" (click)="searchJDM(relation.destination)">{{relation.destination}}</a> </td>
-										<!-- <td>{{relation.weight}}</td> -->
-									</tr>
-								</tbody>
-							</table>
-							<div>
-								<div class="spinner-grow text-primary" [ngClass]="{ 'hidden': !loading }">
-
-								</div>
-								<!-- <pagination-controls (pageChange)="p[i] = $event" [id]="rt['rtid']"></pagination-controls> -->
-								<pagination-controls (pageChange)="getPageForRel($event, i, rt['id'])" [id]="rt['id']"></pagination-controls>
-							</div>
-
-
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="form-group">
-			&nbsp;
-		</div>
-	</div>
 </ng-template>

@@ -20,7 +20,7 @@ export class TermPageComponent implements OnInit {
   public orientation: string;
   loading: boolean;
   pageLoading: boolean;
-  rels = {};
+  public rels = {};
   searchFor: string;
   defs = "defs";
   constructor(private activatedRoute: ActivatedRoute, private jdmService: JDMService,  private router: Router) { }
@@ -35,26 +35,46 @@ export class TermPageComponent implements OnInit {
       this.orientation = params.get('orientation');
       console.log("sortOptions: " + this.sortOptions);
       console.log("orientation: " + this.orientation);
-      if(this.searchFor == -1){ //if searching for whole term
+      if(this.searchFor == "-1"){ //if searching for whole term
         this.jdmService.getTerm(this.term, this.sortOptions, this.orientation).subscribe((res)=>{
         //console.log(res);
         this.resJson = res;
+        //console.log(this.resJson);
+        //console.log(resJson.length);
         //console.log(this.resJson.defs.definitions);
         if(this.resJson['error'] != null){
           console.log("ERROR");
         }else{
+        //console.log("no errors");
           this.defsPage = 1;
-        for(var i = 0; i < this.resJson['rts']['types'].length; i++){
-          this.p[i] = 1;
-          //console.log(this.resJson['term']['name']);
-          this.displayTerm = this.resJson['term']['name'];
-          //console.log(this.displayTerm);
-          //console.log(this.resJson['rts']['types'][0]['id']);
-          this.rels[this.resJson['rts']['types'][i]['id']] = {"count": this.resJson['rt_'+this.resJson['rts']['types'][i]['id']][this.orientation]['count'], "relations":this.resJson['rt_'+this.resJson['rts']['types'][i]['id']][this.orientation]['relations']};
-          
+
+          if(typeof  (this.resJson['rts']) !== "undefined"){
+          //console.log("exact search condition");
+            for(var i = 0; i < this.resJson['rts']['types'].length; i++){
+              this.p[i] = 1;
+              //console.log("loop");
+              //console.log(this.resJson['term']['name']);
+              this.displayTerm = this.resJson['term']['name'];
+              //console.log(this.displayTerm);
+              //console.log(this.resJson['rts']['types'][0]['id']);
+              this.rels[this.resJson['rts']['types'][i]['id']] = {"count": this.resJson['rt_'+this.resJson['rts']['types'][i]['id']][this.orientation]['count'], "relations":this.resJson['rt_'+this.resJson['rts']['types'][i]['id']][this.orientation]['relations']};
+            }
         }
-        //console.log(this.resJson);
-        //console.log(this.rels[0]);
+        else{
+          //console.log("related terms condition");
+          this.p[0]=1;
+          this.displayTerm = this.resJson['term']['name'];
+          this.rels['count'] = this.resJson['related_terms']['count'];
+          this.rels['terms'] = [];
+          //console.log("count: " + this.rels['count']);
+          for(var i = 0; i < this.resJson['related_terms']['terms'].length; i++){
+              this.rels['terms'][i] = this.resJson['related_terms']['terms'][i];
+          }
+
+        }
+        console.log("rels");
+        console.log(this.rels);
+        console.log(this.rels['count']);
         }
         
 
