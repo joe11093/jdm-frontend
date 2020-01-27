@@ -61,7 +61,7 @@ export class TermPageComponent implements OnInit {
             }
         }
         else{
-          //console.log("related terms condition");
+          console.log("related terms condition");
           this.p[0]=1;
           this.displayTerm = this.resJson['term']['name'];
           this.rels['count'] = this.resJson['related_terms']['count'];
@@ -72,6 +72,8 @@ export class TermPageComponent implements OnInit {
           }
 
         }
+        console.log("resJson");
+        console.log(this.resJson);
         console.log("rels");
         console.log(this.rels);
         console.log(this.rels['count']);

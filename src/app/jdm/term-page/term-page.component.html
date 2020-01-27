@@ -1,4 +1,4 @@
-  
+  <h1>{{rels['count']}}</h1>
 <div *ngIf="pageLoading==true; then loadBlock else displayBlock"></div>
 <ng-template #loadBlock>
 	<div class="spinner-grow text-primary bigger-spinner" [ngClass]="{ 'hidden': !pageLoading }">
@@ -18,13 +18,13 @@
 			<p>Cette page montre les résultats trouvés sur le serveur Jeux de Mots.</p>
 			<p>Chaque tableau montre les relations du même type. Quand les relations sont triées par poids, les poids sont considerées en valeur absolue. Les lignes colorées représentent les relations avec des poids négatives.</p>
 		</div>
-		<div *ngIf="resJson['defs'].count==0; then noDefBlock else defBlock"></div>
+		<div *ngIf="resJson['defs']['count']==0; then noDefBlock else defBlock"></div>
 		<ng-template #defBlock>
 			<div class="jumbotron">
 				<h4>Definitions</h4>
 				<br />
 				<div>
-					<p *ngFor="let def of resJson['defs'].definitions |paginate: {itemsPerPage:5, currentPage: defsPage,  totalItems: resJson['defs'].count, id: defs}"> <span class="defNumber">{{def.number}}. </span><span>{{def.content}}</span></p>
+					<p *ngFor="let def of resJson['defs'].definitions |paginate: {itemsPerPage:5, currentPage: defsPage,  totalItems: resJson['defs']['count'], id: defs}"> <span class="defNumber">{{def.number}}. </span><span>{{def.content}}</span></p>
 
 					<div>
 						<div class="spinner-grow text-primary" [ngClass]="{ 'hidden': !loading }">
@@ -108,14 +108,8 @@
 			</div>
 		</div>
 	</ng-template>
-	<ng-template #relatedBlock>
-		<h2>Related terms</h2>
-		{{rels.count}}
-		<!-- <ul>
-			<li *ngFor="let term of rels['terms']">{{term.term}}</li>
-		</ul> -->
 
-	</ng-template>
+	
 		<ng-template #elseBlock>
 
 		<app-search></app-search>
@@ -126,3 +120,9 @@
 		</div>
 	</ng-template>
 </ng-template>
+
+<ng-template #relatedBlock>
+		<h2>Related terms</h2>
+		{{rels['count']}}
+
+	</ng-template>
