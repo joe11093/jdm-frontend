@@ -23,7 +23,7 @@ export class TestingComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private jdmService: JDMService) { }
 
   ngOnInit() {
-   this.jdmService.getRelPageForTerm("buche", 0, 1, this.sortOptions).subscribe((res)=>{
+   this.jdmService.getRelPageForTerm("buche", 0, 1, this.sortOptions, "").subscribe((res)=>{
    this.resJson = res;
    });
   }
@@ -31,7 +31,7 @@ export class TestingComponent implements OnInit {
   getPage(page: number) {
 	 console.log("page before: " + this.p);
 	 this.loading = true;
-     this.jdmService.getRelPageForTerm("buche", 0, page, this.sortOptions).subscribe((res)=>{
+     this.jdmService.getRelPageForTerm("buche", 0, page, this.sortOptions, "").subscribe((res)=>{
 	   this.resJson = res;
 	   this.p = page;
 	   this.loading = false;

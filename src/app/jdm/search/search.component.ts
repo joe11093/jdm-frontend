@@ -14,6 +14,7 @@ export class SearchComponent implements OnInit {
 	public resJson: Object[];
   public sortOptions: any;
   public selectedRelation: string;
+  public orientation: string;
 
   constructor(private jdmService: JDMService, private router: Router) {
     this.selectedRelation = "-1";
@@ -21,12 +22,14 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
   	this.sortOptions = "weight";
+    this.orientation = "exiting";
   }
 
   onSubmit(){
-  	console.log("term: " + this.term);
-    console.log("selected sorting: " + this.sortOptions);
-    console.log("selected: " + this.selectedRelation);
-    this.router.navigate(["/term", {term: this.term, sortOptions: this.sortOptions, searchFor: this.selectedRelation}]);
+  	//console.log("term: " + this.term);
+    //console.log("selected sorting: " + this.sortOptions);
+    //console.log("selected: " + this.selectedRelation);
+    //console.log("orientation: " + this.orientation);
+    this.router.navigate(["/term", {term: this.term, sortOptions: this.sortOptions, searchFor: this.selectedRelation, orientation: this.orientation}]);
   }
 }

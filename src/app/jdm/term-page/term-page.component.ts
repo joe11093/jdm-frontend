@@ -17,6 +17,7 @@ export class TermPageComponent implements OnInit {
   public displayTerm: string;
   resJson: any[];
   public sortOptions: string;
+  public orientation: string;
   loading: boolean;
   pageLoading: boolean;
   rels = {};
@@ -25,83 +26,77 @@ export class TermPageComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private jdmService: JDMService,  private router: Router) { }
 
   ngOnInit() {
-   this.pageLoading = true;
-   this.activatedRoute.paramMap.subscribe(
-    (params: ParamMap) => {
-      this.searchFor = params.get("searchFor");
-       //console.log("searchFor: " + this.searchFor);
+    this.activatedRoute.paramMap.subscribe(
+      (params: ParamMap) => {
+        this.searchFor = params.get("searchFor");
+       
       this.term = params.get('term');
       this.sortOptions = params.get('sortOptions');
-      //console.log("sort options: " + this.sortOptions);
-      if(this.searchFor == "-1"){
-      console.log("if");
-      this.jdmService.getTerm(this.term, this.sortOptions).subscribe((res)=>{
+      this.orientation = params.get('orientation');
+      console.log("sortOptions: " + this.sortOptions);
+      console.log("orientation: " + this.orientation);
+      this.jdmService.getTerm(this.term, this.sortOptions, this.orientation).subscribe((res)=>{
+        console.log(res);
         this.resJson = res;
-        console.log(this.resJson);
+        //console.log(this.resJson.defs.definitions);
         if(this.resJson['error'] != null){
           console.log("ERROR");
         }else{
           this.defsPage = 1;
-        for(var i = 0; i < this.resJson['rts'].length; i++){
+        for(var i = 0; i < this.resJson['rts']['types'].length; i++){
           this.p[i] = 1;
           //console.log(this.resJson['term']['name']);
           this.displayTerm = this.resJson['term']['name'];
-          this.rels[this.resJson['rts'][i]['id']] = {"count": this.resJson['rt_'+this.resJson['rts'][i]['id']]['count'], "relations":this.resJson['rt_'+this.resJson['rts'][i]['id']]['relations']};
+          //console.log(this.displayTerm);
+          //console.log(this.resJson['rts']['types'][0]['id']);
+          this.rels[this.resJson['rts']['types'][i]['id']] = {"count": this.resJson['rt_'+this.resJson['rts']['types'][i]['id']]['count'], "relations":this.resJson['rt_'+this.resJson['rts']['types'][i]['id']][this.orientation]['relations']};
+          
         }
+        //console.log(this.resJson);
+        console.log(this.rels[0]);
         }
         
 
         this.pageLoading = false;
       });
       }
-      else{
-      console.log("else");
-        this.jdmService.getTermWithSelectedRT(this.term, this.sortOptions, this.searchFor).subscribe((res)=>{
-        this.resJson = res;
-        console.log(this.resJson);
-        this.defsPage = 1;
-        for(var i = 0; i < this.resJson['rts'].length; i++){
-          this.p[i] = 1;
-          //console.log(this.resJson['term']['name']);
-          this.displayTerm = this.resJson['term']['name'];
-          this.rels[this.resJson['rts'][i]['id']] = {"count": this.resJson['rt_'+this.resJson['rts'][i]['id']]['count'], "relations":this.resJson['rt_'+this.resJson['rts'][i]['id']]['relations']};
-          
-        }
-        this.pageLoading = false;
-      });
-      }
-    }
-    )
- }
+      )
+
+  }
 
 public searchJDM(string){
   this.pageLoading = true;
   this.searchFor = "-1";
   string = string.replace(/\s/gm,'+');
   //console.log("search jdm: " + string);
-  this.router.navigate(["/term", {term: string, sortOptions: this.sortOptions, searchFor: -1}]);
+  this.router.navigate(["/term", {term: string, sortOptions: this.sortOptions, searchFor: -1, orientation: this.orientation}]);
 }
 
 getPageForRel(page: number, index: number,  rel: number) {
         this.loading = true;
-        this.jdmService.getRelPageForTerm(this.term, rel, page, this.sortOptions).subscribe((res)=>
+        this.jdmService.getRelPageForTerm(this.term, rel, page, this.sortOptions, this.orientation).subscribe((res)=>
           {
-            this.rels[rel]['relations'] = res ;
+            console.log(res);
+            this.rels[rel]['relations'] = res[this.orientation]['relations'] ;
             this.p[index] = page;
             this.loading = false;
           }
         );
-    }
-
+}
+ 
 getPageForDefs(page: number) {
         this.loading = true;
-        this.jdmService.getDefPageForTerm(this.term, page).subscribe((res)=>
+        this.jdmService.getDefPageForTerm(this.term, page, this.sortOptions, this.orientation).subscribe((res)=>
           {
             //console.log(res);
-            this.resJson['defs']['definitions'] = res ;
+            this.resJson['defs']['definitions'] = res.definitions ;
             this.defsPage = page;
             this.loading = false;
           }
         );
     }    
+
+
+
+
 }
